@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Frodo Baggins",
+        "race": "Hobbit",
+        "location": "The Shire",
+        "role": "Ringbearer",
+        "orcs_defeated": 0
+    },
+    {
+        "name": "Gandalf",
+        "race": "Wizard",
+        "location": "Middle-Earth",
+        "role": "Advisor",
+        "orcs_defeated": 50
+    },
+    {
+        "name": "Aragorn",
+        "race": "Human",
+        "location": "Gondor",
+        "role": "King",
+        "orcs_defeated": 100
+    },
+    {
+        "name": "Legolas",
+        "race": "Elf",
+        "location": "Mirkwood",
+        "role": "Archer",
+        "orcs_defeated": 150
+    },
+    {
+        "name": "Gimli",
+        "race": "Dwarf",
+        "location": "Lonely Mountain",
+        "role": "Warrior",
+        "orcs_defeated": 120
+    },
+    {
+        "name": "Samwise Gamgee",
+        "race": "Hobbit",
+        "location": "The Shire",
+        "role": "Gardener",
+        "orcs_defeated": 10
+    },
+    {
+        "name": "Sauron",
+        "race": "Maia",
+        "location": "Mordor",
+        "role": "Antagonist",
+        "orcs_defeated": 0
+    },
+    {
+        "name": "Gollum",
+        "race": "Creature",
+        "location": "Misty Mountains",
+        "role": "Seeker of the Ring",
+        "orcs_defeated": 5
+    },
+    {
+        "name": "Galadriel",
+        "race": "Elf",
+        "location": "Lothlorien",
+        "role": "Elf Queen",
+        "orcs_defeated": 20
+    },
+    {
+        "name": "Boromir",
+        "race": "Human",
+        "location": "Gondor",
+        "role": "Soldier",
+        "orcs_defeated": 30
+    }
+]

@@ -1,0 +1,4 @@
+first line
+second line
+third line
+Total: 4 lines, 13 words, 68 chars
