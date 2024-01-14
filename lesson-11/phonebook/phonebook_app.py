@@ -24,6 +24,7 @@ saved to loaded JSON.
 from operations import create_phonebook_path, open_phonebook_path, exit_app, create_record, update_record, \
     delete_record, search_func
 
+NO_OP_MSG = "\n---No such operation---\n"
 
 def phonebook_app():
     phonebook_operations = {
@@ -55,7 +56,7 @@ def phonebook_app():
                     print()
                     break
             else:
-                print("---No such operation---\n")
+                print(NO_OP_MSG)
                 continue
 
         while True:
@@ -71,7 +72,7 @@ def phonebook_app():
             elif user_op == "back":
                 break
             else:
-                print("---No such operation---\n")
+                print(NO_OP_MSG)
 
 
 if __name__ == "__main__":
