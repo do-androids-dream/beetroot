@@ -11,7 +11,8 @@ def some_func(a=0, b=1):
 
 
 def count_local(func):
-    return len(func.__code__.co_varnames)
+    # return len(func.__code__.co_varnames)
+    return func.__code__.co_nlocals
 
 
 print(f"{some_func.__name__} local var number:", count_local(some_func))
