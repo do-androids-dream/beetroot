@@ -292,7 +292,7 @@ class Fraction:
 
         if res_numerator:
             fraction = self.resolve_fraction(res_numerator, res_denominator)
-            if fraction is tuple:
+            if isinstance(fraction, tuple):
                 if len(fraction) == 2:
                     return Fraction(fraction[0], fraction[1])
                 else:
@@ -320,7 +320,7 @@ class Fraction:
         else:
             integer = numerator // denominator
             numerator -= integer * denominator
-            return integer, Fraction(numerator, denominator)
+            return integer, numerator, denominator
         return numerator, denominator
 
     def __repr__(self):
