@@ -26,6 +26,7 @@ from operations import create_phonebook_path, open_phonebook_path, exit_app, cre
 
 NO_OP_MSG = "\n---No such operation---\n"
 
+
 def phonebook_app():
     phonebook_operations = {
         "create": create_phonebook_path,
