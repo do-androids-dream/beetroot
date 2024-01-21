@@ -80,7 +80,6 @@ id_ - is just a random unique integer
 """
 
 
-
 class Boss:
 
     def __init__(self, id_: int, name: str, company: str):
@@ -167,33 +166,76 @@ to_float
 
 Don't forget to use @wraps
 
-'''
+"""
+
 
 class TypeDecorators:
 
-    pass
+    @staticmethod
+    def to_type(func, type_):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            try:
+                return type_(result)
+            except ValueError:
+                raise ValueError(f"convert of {type(result)} to {type_} is not supported")
 
- 
+        return wrapper
+
+    to_int = lambda func: TypeDecorators.to_type(func, type_=int)
+    to_str = lambda func: TypeDecorators.to_type(func, type_=str)
+    to_bool = lambda func: TypeDecorators.to_type(func, type_=bool)
+    to_float = lambda func: TypeDecorators.to_type(func, type_=float)
+
+    # @staticmethod
+    # def to_str(func):
+    #     def wrapper(*args, **kwargs):
+    #         result = func(*args, **kwargs)
+    #         try:
+    #             return str(result)
+    #         except ValueError:
+    #             raise ValueError(f"convert of {type(result)} to str is not supported")
+    #
+    #     return wrapper
+    #
+    # @staticmethod
+    # def to_bool(func):
+    #     def wrapper(*args, **kwargs):
+    #         result = func(*args, **kwargs)
+    #         try:
+    #             return bool(result)
+    #         except ValueError:
+    #             raise ValueError(f"convert of {type(result)} to bool is not supported")
+    #
+    #     return wrapper
+    #
+    # @staticmethod
+    # def to_float(func):
+    #     def wrapper(*args, **kwargs):
+    #         result = func(*args, **kwargs)
+    #         try:
+    #             return float(result)
+    #         except ValueError:
+    #             raise ValueError(f"convert of {type(result)} to float is not supported")
+    #
+    #     return wrapper
+
 
 @TypeDecorators.to_int
-
 def do_nothing(string: str):
 
     return string
 
- 
 
 @TypeDecorators.to_bool
-
 def do_something(string: str):
 
     return string
 
  
-
 assert do_nothing('25') == 25
+print(do_nothing('25'))
 
 assert do_something('True') is True
+print(do_something('True'))
 
-'''
-"""
