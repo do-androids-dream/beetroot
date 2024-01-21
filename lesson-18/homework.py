@@ -10,12 +10,15 @@ Valid email address format
 
 Email address
 """
-print('\n---Task 1---\n')
 
 import re
 
 
 class Email:
+    pattern = (r'^(\"[^@]{1,62}\"@[a-zA-Z\d]+\.[a-zA-Z]{2,}$)'
+               r'|'
+               r"^[!#$%&'*+/=?^_`{|}~a-zA-Z\d]+([\.-]\w+)*(?<![\.-])@[a-zA-Z\d]+\.[a-zA-Z]{2,}$")
+
     def __init__(self, email):
         self.email = email
 
@@ -38,12 +41,10 @@ class Email:
         - Digits 0 to 9, provided that top-level domain names are not all-numeric.
             """
 
-        pattern = (r'^(\"[^@]{1,62}\"@[a-zA-Z\d]+\.[a-zA-Z]{2,}$)'
-                   r'|'
-                   r"^[!#$%&'*+/=?^_`{|}~a-zA-Z\d]+([\.-]\w+)*(?<![\.-])@[a-zA-Z\d]+\.[a-zA-Z]{2,}$")
-        if re.fullmatch(pattern, email):
-            if len(email.split("@")[0]) <= 64:
-                return True
+        pattern_match = re.fullmatch(cls.pattern, email) is not None
+        length_match = len(email.split("@")[0]) <= 64
+
+        return pattern_match and length_match
 
     @property
     def email(self):
@@ -54,33 +55,13 @@ class Email:
         if self.validate(value):
             self._email = value
         else:
-            print(f'{self} -> {value} - Provided email is not valid')
+            raise ValueError(f'{self} -> {value} - Provided email is not valid')
 
 
-e1 = Email('John..Doe@example.com')
-e2 = Email('-johndoe@gmail.com')
-e3 = Email('John--Doe@gmail.com')
-e4 = Email('John..Doe@com.ua')
-e5 = Email('abc-d-@mail.com')
-e6 = Email('John.Doe.12346789.123456789.123456789.123456789.123456789.123456789@com.ua')
-e7 = Email(' @com')
-e8 = Email('John.Doe.12346789.123456789.123456789.@com.ua')
-e9 = Email('.John.Doe.12346789.123456789.123456789@com.ua')
-e10 = Email('John.Doe@com.u')
-e11 = Email('John.Doe@com.')
-e12 = Email('John@Doe@com.ua')
-e13 = Email('"John@Doe"@com.ua')
-e14 = Email('John..Doe@com.ua.')
-
-e15 = Email('"John..Doe"@example.com')  # valid
-e16 = Email('John.Doe@com.ua')  # valid
-e17 = Email('John.Doe.12346789.123456789.123456789@com.ua')  # valid
-e18 = Email('John#.Doe@com.ua')  # valid
-e19 = Email('abc-d@mail.com')  # valid
-e20 = Email('JohnDoe@mail.com')  # valid
-
-
-print("\nValid:", e15.email, e16.email, e17.email, e18.email, e19.email, e20.email, sep='\n')
+if __name__ == "__main__":
+    print('\n---Task 1---\n')
+    e = Email("JohnDoe@gmail.com")
+    print(e.email)
 
 """
 Task 2
@@ -97,7 +78,7 @@ You can refactor the existing code.
 
 id_ - is just a random unique integer
 """
-print('\n---Task 2---\n')
+
 
 
 class Boss:
@@ -154,16 +135,18 @@ class Worker:
         self.boss.workers.remove(self)
 
 
-b = Boss(1, "Big Boss", "Corp")
-print(b.workers)
-w1 = Worker(1, "Usual Guy", "Corp", b)
-w2 = Worker(2, "Unusual Guy", "Corp", b)
-print(b.workers)
-print(w1.boss.name)
-b2 = Boss(2, "Good Boss", "Corp")
-w2.boss = b2
-print(f"{b.name} - {b.workers}")
-print(f"{b2.name} - {b2.workers}")
+if __name__ == "__main__":
+    print('\n---Task 2---\n')
+    b = Boss(1, "Big Boss", "Corp")
+    print(b.workers)
+    w1 = Worker(1, "Usual Guy", "Corp", b)
+    w2 = Worker(2, "Unusual Guy", "Corp", b)
+    print(b.workers)
+    print(w1.boss.name)
+    b2 = Boss(2, "Good Boss", "Corp")
+    w2.boss = b2
+    print(f"{b.name} - {b.workers}")
+    print(f"{b2.name} - {b2.workers}")
 
 """
 Task 3
