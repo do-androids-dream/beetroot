@@ -21,7 +21,7 @@ if it is present in the folder with application, else raise an error. After the 
 saved to loaded JSON.
 """
 
-from operations import create_phonebook_path, open_phonebook_path, exit_app, create_record, update_record, \
+from modules.operations import create_phonebook_path, open_phonebook_path, exit_app, create_record, update_record, \
     delete_record, search_func
 
 NO_OP_MSG = "\n---No such operation---\n"

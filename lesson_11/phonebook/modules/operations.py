@@ -1,4 +1,4 @@
-from data_op import load_phonebook, save_changes, save_phonebook_name, load_list_phonebooks, DATA_FILE
+from .data_op import load_phonebook, save_changes, save_phonebook_name, load_list_phonebooks, DATA_FILE
 
 RECORD_TEMPLATE = (
     "first name",
@@ -23,7 +23,7 @@ def validate_record(record_key, record_val, file_p):
     phonebook = load_phonebook(file_p)
 
     if record_key in STR_FIELDS:
-        if not record_val.isalpha():
+        if not record_val.isalpha() or len(record_val) < 1:
             print(f"\n---{record_key} should include A-Z/a-z letter only---\n")
             return False
     if record_key == RECORD_TEMPLATE[2]:
