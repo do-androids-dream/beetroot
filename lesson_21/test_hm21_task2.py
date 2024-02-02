@@ -43,12 +43,37 @@ class CustomOpenTest(unittest.TestCase):
         self.assertEqual(self.result, self.test_msg)
         self.assertRaises(FileNotFoundError, open, self.log_fp)
 
+    def test_customopen_negative__wrong_mode_value(self):
+        with CustomOpen(self.test_fp, mode="test") as file:
+            result = file
+
+        self.assertEqual(result, None)
+
+    def test_customopen_negative__wrong_mode_type(self):
+        with CustomOpen(self.test_fp, mode=123) as file:
+            result = file
+
+        self.assertEqual(result, None)
+
     def tearDown(self):
         os.remove(self.test_fp)
 
         if self.log:
             logging.shutdown()
             os.remove("customopen_log.txt")
+
+
+class CustomOpenNegative(unittest.TestCase):
+    test_msg = "test message"
+    test_fp = "test.txt"
+    log = False
+    log_fp = "customopen_log.txt"
+
+    def test_customopen_negative__nofile(self):
+        with CustomOpen(self.test_fp) as file:
+            result = file
+
+        self.assertEqual(result, None)
 
 
 if __name__ == "__main__":
