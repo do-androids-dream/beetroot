@@ -12,6 +12,7 @@ class ValidationError(Exception):
 class Record:
     PHONE_NUMBER_NOT_VALID_MSG = "Not valid phone number, should include 12 digits only"
     FIELD_NOT_VALID_MSG = "NAME Field can not be empty"
+    SUCCESS_MSG = "Operation succeed"
 
     def __init__(self, first_name: str, last_name: str, phone_number: str, city: str, country: str):
         self.first_name = self.validate_record_field(first_name)
@@ -38,9 +39,34 @@ class Record:
             return data.capitalize()
         raise ValidationError(cls.FIELD_NOT_VALID_MSG)
 
+    def record_to_dict(self) -> dict:
+        record = {
+            "first name": self.first_name,
+            "last name": self.last_name,
+            "phone number": self.phone_number,
+            "city": self.city,
+            "country": self.country
+        }
+        return record
+
+    def load_records(self, fb: "PhoneBook") -> list:
+        try:
+            with open(fb.fp) as db:
+                record_list = json.load(db)
+        except FileNotFoundError:
+            record_list = []
+
+        return record_list
+
     def save_record(self, fb: "PhoneBook"):
-        with open(fb.fp, "a") as db:
-            json.dump(self, db)
+        records = self.load_records(fb)
+        record = self.record_to_dict()
+        records.append(record)
+
+        with open(fb.fp, "w") as db:
+            json.dump(records, db)
+
+        print(self.SUCCESS_MSG)
 
 
 class PhoneBook:
@@ -60,3 +86,4 @@ class PhoneBook:
 
     def create_record(self, first_name, last_name, phone_number, city, country):
         new_record = Record(first_name, last_name, phone_number, city, country)
+        new_record.save_record(self)
