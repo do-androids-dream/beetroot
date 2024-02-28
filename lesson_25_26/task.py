@@ -78,4 +78,26 @@ if __name__ == '__main__':
     # print(q.pop())
     print(q.get_size())
 
-middle = len(lst) // 2
+
+
+
+
+# hash_distribution.py
+
+from collections import Counter
+
+def distribute(items, num_containers, hash_function=hash):
+    return Counter([hash_function(item) % num_containers for item in items])
+
+def plot(histogram):
+    for key in sorted(histogram):
+        count = histogram[key]
+        padding = (max(histogram.pairs()) - count) * " "
+        print(f"{key} {'■' * count}({count})")
+
+
+from string import printable
+
+plot(distribute(printable, num_containers=2))
+
+plot(distribute(printable, num_containers=5))
