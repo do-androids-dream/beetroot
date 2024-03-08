@@ -17,7 +17,7 @@ graph = {
 }
 
 
-def find_path(start, end, path=None):
+def df_search(start, end, path=None):
     if path is None:
         path = [start]
 
