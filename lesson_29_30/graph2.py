@@ -88,6 +88,40 @@ class Graph:
 
         return visited
 
+    def find_all_paths(self, start: Node, end: Node, visited: Optional[list[Node]] = None):
+        if visited is None:
+            visited = []
+        visited.append(start)
+
+        if start == end:
+            return [visited.copy()]
+
+        all_paths = []
+
+        for next_node in start.edges:
+            if next_node not in visited:
+                paths = self.find_all_paths(next_node, end, visited.copy())
+                all_paths.append(paths)
+
+        return self._return_all_paths(all_paths)
+
+    def _return_all_paths(self, paths: list, all_paths: Optional[Node] = None) -> list[Optional[list[Node]]]:
+        if all_paths is None:
+            all_paths = []
+        for path in paths:
+            if isinstance(path, list):
+                if path and not isinstance(path[0], list):
+                    all_paths.append(path)
+                self._return_all_paths(path, all_paths)
+
+        return all_paths
+
+    def shortest_path(self, start: Node, end: Node) -> Optional[list[Node]]:
+        paths = self.find_all_paths(start, end)
+        if paths:
+            return min(paths, key=len)
+        return paths
+
 
 a = Node("A")
 b = Node("B")
@@ -123,3 +157,12 @@ print(graph.find_strongly_connected_components(g))
 print("*" * 10)
 print(graph.find_shortest_way(a, e))
 print(graph.find_shortest_way(a, c))
+print("*" * 10)
+print(graph.find_all_paths(a, e))
+print(graph.shortest_path(a, e))
+print("*" * 10)
+print(graph.find_all_paths(a, g))
+print(graph.shortest_path(a, g))
+print("*" * 10)
+print(graph.find_all_paths(b, f))
+print(graph.shortest_path(b, f))
