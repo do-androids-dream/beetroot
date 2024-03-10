@@ -38,7 +38,12 @@ class Graph:
         return visited
 
     @staticmethod
-    def bf_search(start: Node, visited: Optional[list[Node]] = None, queue: Optional[list[Node]] = None) -> Optional[list[Node]]:
+    def bf_search(
+            start: Node,
+            visited: Optional[list[Node]] = None,
+            queue: Optional[list[Node]] = None
+    ) -> Optional[list[Node]]:
+
         if visited is None:
             visited = []
         if queue is None:
@@ -68,7 +73,12 @@ class Graph:
         return None
 
     @staticmethod
-    def find_shortest_way(start: Node, end: Node, visited: Optional[list[Node]] = None, queue: Optional[list[Node]] = None):
+    def find_shortest_way(
+            start: Node,
+            end: Node,
+            visited: Optional[list[Node]] = None,
+            queue: Optional[list[Node]] = None
+    ) -> list[Node]:
         if visited is None:
             visited = []
         if queue is None:
@@ -88,7 +98,12 @@ class Graph:
 
         return visited
 
-    def find_all_paths(self, start: Node, end: Node, visited: Optional[list[Node]] = None):
+    def find_all_paths(
+            self,
+            start: Node,
+            end: Node,
+            visited: Optional[list[Node]] = None
+    ) -> list[Optional[Node]]:
         if visited is None:
             visited = []
         visited.append(start)
@@ -105,9 +120,15 @@ class Graph:
 
         return self._return_all_paths(all_paths)
 
-    def _return_all_paths(self, paths: list, all_paths: Optional[Node] = None) -> list[Optional[list[Node]]]:
+    def _return_all_paths(
+            self,
+            paths: list,
+            all_paths: Optional[Node] = None
+    ) -> list[Optional[list[Node]]]:
+
         if all_paths is None:
             all_paths = []
+
         for path in paths:
             if isinstance(path, list):
                 if path and not isinstance(path[0], list):
@@ -120,6 +141,7 @@ class Graph:
         paths = self.find_all_paths(start, end)
         if paths:
             return min(paths, key=len)
+
         return paths
 
 
