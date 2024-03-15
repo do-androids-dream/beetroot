@@ -1,4 +1,4 @@
-"""gues the number game server"""
+"""gues the number game server + encryption"""
 
 import socket
 import random
@@ -100,7 +100,7 @@ def play_game():
                     server_s.sendto(msg.encode(), a)
 
 
-def procced_encryption(msg: str, salt: int) -> str:
+def proceed_encryption(msg: str, salt: int) -> str:
     enc_msg = []
     for i in msg:
         i = chr(ord(i) + salt)
@@ -144,56 +144,61 @@ def encrypt_msg(enc_addr):
             continue
 
         if addr == enc_addr:
-            data = procced_encryption(data, salt)
+            data = proceed_encryption(data, salt)
 
         for a in users:
             if a != "user_count":
                 server_s.sendto(data.encode(), a)
 
-while True:
-    data, addr = receive_msg()
 
-    if data == "exit":
-        print(f"exit {users}")
-        if addr:
-            for a in users:
-                if a != "user_count":
-                    server_s.sendto(f"{users[a]} has left".encode(), a)
-            users.pop(addr)
-        continue
+def main():
+    while True:
+        data, addr = receive_msg()
 
-    if addr not in users:
-        users[addr] = user_names[users["user_count"]]
-        users["user_count"] += 1
-        print(users)
+        if data == "exit":
+            print(f"exit {users}")
+            if addr:
+                for a in users:
+                    if a != "user_count":
+                        server_s.sendto(f"{users[a]} has left".encode(), a)
+                users.pop(addr)
+            continue
 
-    if data.lower() == "start":
-        start_game = True
-
-    if data.lower() == "cipher":
-        start_encryption = True
-
-    if start_game:
-        msg = users[addr] + " " + GAME_START_MSG
-        print(msg)
-
-        for a in users:
+        if addr not in users:
+            users[addr] = user_names[users["user_count"]]
+            users["user_count"] += 1
             print(users)
-            print(a)
 
-            if a != "user_count":
-                server_s.sendto(msg.encode(), a)
-                server_s.sendto(GAME_MSG, a)
+        if data.lower() == "start":
+            start_game = True
 
-        play_game()
-        start_game = False
+        if data.lower() == "cipher":
+            start_encryption = True
 
-    if start_encryption:
-        encrypt_msg(addr)
-        start_encryption = False
+        if start_game:
+            msg = users[addr] + " " + GAME_START_MSG
+            print(msg)
 
-    server_s.sendto(INIT_MSG.encode(), addr)
+            for a in users:
+                print(users)
+                print(a)
 
+                if a != "user_count":
+                    server_s.sendto(msg.encode(), a)
+                    server_s.sendto(GAME_MSG, a)
+
+            play_game()
+            start_game = False
+
+        if start_encryption:
+            encrypt_msg(addr)
+            start_encryption = False
+
+        server_s.sendto(INIT_MSG.encode(), addr)
+
+
+if __name__ == '__main__':
+    main()
 
 
 
