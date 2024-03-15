@@ -13,6 +13,12 @@ def handle_responses():
     while True:
         sleep(0.2)
         msg = input("msg: ").encode()
+
+        if msg == b"exit":
+            client_s.shutdown(1)
+            client_s.close()
+            break
+
         client_s.sendto(msg, (HOST, PORT))
 
 
@@ -21,7 +27,11 @@ thread.start()
 
 
 while True:
-    resp, addr = client_s.recvfrom(1024)
-    sleep(0.1)
-    print(f">>> Response: {resp.decode()}")
-    print(f"from {addr}")
+    try:
+        resp, addr = client_s.recvfrom(1024)
+
+        print(f">>> Response: {resp.decode()}")
+        print(f"from {addr}")
+    except OSError:
+        print("connection closed")
+        break
